@@ -1,0 +1,55 @@
+
+/* Kostumisasi Body */
+body {
+    font-family: 'Inter', sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.content-wrapper {
+    flex: 1;
+    margin: 12px 12px 12px 12px;
+    padding-bottom: 80px;
+}
+
+/* Kostumisasi Button */
+.theme-button-neutral-custom {
+    border-radius: 10px;
+    background-color: #209AC7; 
+    color: white; 
+    font-size: 14px;
+}
+.theme-button-neutral-custom:hover {
+    background-color: #209AC7; 
+    color: white; 
+}
+
+.theme-button-neutral-alt-custom {
+    border-radius: 10px;
+    background-color: #23C2FB; 
+    color: white; 
+    font-size: 14px;
+}
+
+.theme-button-neutral-alt-custom:hover {
+    background-color: #23C2FB; 
+    color: white; 
+}
+.theme-button-danger-custom {
+    border-radius: 10px;
+    background-color: #C72020; 
+    color: white; 
+    font-size: 14px;
+}
+.theme-button-danger-custom:hover {
+    background-color: #C72020; 
+    color: white; 
+}
+
+/* Kostumisasi Text */
+.page-title {
+    font-size: 24px;
+}
+
+

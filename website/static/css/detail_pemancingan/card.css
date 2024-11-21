@@ -1,0 +1,42 @@
+.detail-pemancingan-img {
+    border-radius: 10px;
+    width: 100%; 
+    height: 175px;
+    object-fit: cover; /* Ensure the image covers the area */
+}
+
+.detail-pemancingan-card {
+    background-color: #216988;
+    border-radius: 15px;
+}
+
+.detail-pemancingan-card-title {
+    font-size: 20px;
+    color: white;
+}
+
+.detail-pemancingan-card-text {
+    font-size: 14px;
+    color: white;
+}
+
+.detail-tag-text {
+    font-size: 12px;
+    color: white;
+    font-weight: bold;
+    word-wrap: break-word; 
+    white-space: normal;
+    
+}
+
+.detail-icon {
+    color: white;
+    width: 28px;
+    height: 28px;
+}
+
+.scrollable-content {
+    flex-grow: 1;           /* Allows it to take up remaining space */
+    overflow-y: auto;       /* Enables vertical scrolling */
+    padding-right: 1rem;    /* Optional: spacing to avoid scrollbar overlap */
+}

@@ -1,0 +1,84 @@
+{% extends "base.html" %} 
+
+{% block title %}Beranda{% endblock %}
+
+{% block page_specified_style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/detail_pemancingan/card.css') }}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-between align-items-center mt-1 mb-4">
+        <div class="page-title"><b>Detail</b></div>
+        <a href="{{ url_for('views.list_pemancingan') }}" class="btn theme-button-danger-custom ps-5 pe-5"><b>Kembali</b></a>
+    </div>
+
+    <img src="{{ url_for('static', filename='images/' ~ informasi_pemancingan['image_url']) }}" class="detail-pemancingan-img mt-1" alt="...">
+
+    <div class="card h-100 shadow detail-pemancingan-card mt-4">
+        <div class="card-body">
+            
+            <!-- Should not flex -->
+            <div class="d-flex justify-content-between g-1 mb-2">
+                <a href="{{informasi_pemancingan['link_map']}}" class="btn shadow theme-button-neutral-custom flex-grow-1 me-1"><b>Lihat Maps</b></a>
+                <a href="{{ url_for('views.list_pemancingan') }}" class="btn shadow theme-button-neutral-alt-custom flex-grow-1 ms-1"><b>Buat Reservasi</b></a>
+            </div> 
+
+            <div class="row p-1">
+                <div class="detail-pemancingan-card-title"><b>{{informasi_pemancingan['nama']}}</b></div>
+                <div class="detail-pemancingan-card-text mb-3 mt-2 fw-lighter">{{informasi_pemancingan['deskripsi']}}</div>
+    
+                <div class="detail-pemancingan-card-text"><b>Lokasi</b></div>
+                <div class="d-flex align-items-start">
+                    <svg class="me-2 flex-shrink-0" style="width: 28px; height: 28px;" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" viewBox="0 0 256 256">
+                        <path d="M128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152ZM240,56H16a8,8,0,0,0-8,8V192a8,8,0,0,0,8,8H240a8,8,0,0,0,8-8V64A8,8,0,0,0,240,56ZM193.65,184H62.35A56.78,56.78,0,0,0,24,145.65v-35.3A56.78,56.78,0,0,0,62.35,72h131.3A56.78,56.78,0,0,0,232,110.35v35.3A56.78,56.78,0,0,0,193.65,184ZM232,93.37A40.81,40.81,0,0,1,210.63,72H232ZM45.37,72A40.81,40.81,0,0,1,24,93.37V72ZM24,162.63A40.81,40.81,0,0,1,45.37,184H24ZM210.63,184A40.81,40.81,0,0,1,232,162.63V184Z"></path>
+                    </svg>
+                    <span class="detail-tag-text flex-grow-1 mt-1">
+                        {{informasi_pemancingan['alamat']}}
+                    </span>
+                </div>
+
+                <div class="detail-pemancingan-card-text mt-1"><b>Biaya</b></div>
+                <div class="d-flex align-items-start">
+                    <svg class="me-2 flex-shrink-0" width="28" height="28" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" viewBox="0 0 256 256">
+                        <path d="M128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152ZM240,56H16a8,8,0,0,0-8,8V192a8,8,0,0,0,8,8H240a8,8,0,0,0,8-8V64A8,8,0,0,0,240,56ZM193.65,184H62.35A56.78,56.78,0,0,0,24,145.65v-35.3A56.78,56.78,0,0,0,62.35,72h131.3A56.78,56.78,0,0,0,232,110.35v35.3A56.78,56.78,0,0,0,193.65,184ZM232,93.37A40.81,40.81,0,0,1,210.63,72H232ZM45.37,72A40.81,40.81,0,0,1,24,93.37V72ZM24,162.63A40.81,40.81,0,0,1,45.37,184H24ZM210.63,184A40.81,40.81,0,0,1,232,162.63V184Z"></path>
+                    </svg>
+                    <span class="detail-tag-text flex-grow-1 mt-1">
+                        {{informasi_pemancingan['harga']}}
+                    </span>
+                </div>
+
+                <div class="detail-pemancingan-card-text mt-1"><b>Biaya Pengolahan</b></div>
+                <div class="d-flex align-items-start">
+                    <svg class="me-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFFFFF" viewBox="0 0 256 256">
+                        <path d="M231.87,32.13a27.84,27.84,0,0,0-39.32,0L18.34,206.4a8,8,0,0,0,3.86,13.45A160.67,160.67,0,0,0,58.4,224c32.95,0,65.92-10.2,96.95-30.23,31.76-20.5,50.19-43.82,51-44.81a8,8,0,0,0-.64-10.59L185.32,118l46.55-46.56A27.85,27.85,0,0,0,231.87,32.13ZM189.1,144.44a220.41,220.41,0,0,1-42.86,36.16c-34.43,22.1-69.94,30.92-105.77,26.3L146,101.33Zm31.46-84.3L174,106.7,157.32,90l46.55-46.56a11.8,11.8,0,0,1,16.69,16.69Z"></path></svg>
+                    <span class="detail-tag-text flex-grow-1 mt-1">
+                        {{informasi_pemancingan['biaya_olah']}}
+                    </span>
+                </div>
+
+                <div class="detail-pemancingan-card-text mt-1"><b>Kolam</b></div>
+                <div class="d-flex align-items-start">
+                    <svg class="me-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFFFFF" viewBox="0 0 256 256">
+                        <path d="M231.87,32.13a27.84,27.84,0,0,0-39.32,0L18.34,206.4a8,8,0,0,0,3.86,13.45A160.67,160.67,0,0,0,58.4,224c32.95,0,65.92-10.2,96.95-30.23,31.76-20.5,50.19-43.82,51-44.81a8,8,0,0,0-.64-10.59L185.32,118l46.55-46.56A27.85,27.85,0,0,0,231.87,32.13ZM189.1,144.44a220.41,220.41,0,0,1-42.86,36.16c-34.43,22.1-69.94,30.92-105.77,26.3L146,101.33Zm31.46-84.3L174,106.7,157.32,90l46.55-46.56a11.8,11.8,0,0,1,16.69,16.69Z"></path></svg>
+                    <span class="detail-tag-text flex-grow-1 mt-1">
+                        {{informasi_pemancingan['biaya_olah']}}
+                    </span>
+                </div>
+
+                <div class="detail-pemancingan-card-text mt-1"><b>Ikan</b></div>
+                <div class="d-flex align-items-start">
+                    <svg class="me-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFFFFF" viewBox="0 0 256 256">
+                        <path d="M231.87,32.13a27.84,27.84,0,0,0-39.32,0L18.34,206.4a8,8,0,0,0,3.86,13.45A160.67,160.67,0,0,0,58.4,224c32.95,0,65.92-10.2,96.95-30.23,31.76-20.5,50.19-43.82,51-44.81a8,8,0,0,0-.64-10.59L185.32,118l46.55-46.56A27.85,27.85,0,0,0,231.87,32.13ZM189.1,144.44a220.41,220.41,0,0,1-42.86,36.16c-34.43,22.1-69.94,30.92-105.77,26.3L146,101.33Zm31.46-84.3L174,106.7,157.32,90l46.55-46.56a11.8,11.8,0,0,1,16.69,16.69Z"></path></svg>
+                    <span class="detail-tag-text flex-grow-1 mt-1">
+                        {{informasi_pemancingan['biaya_olah']}}
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+{% endblock %}

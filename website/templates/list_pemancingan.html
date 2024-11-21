@@ -1,0 +1,46 @@
+{% extends "base.html" %} 
+{% block title %}List Pemancingan{% endblock %}
+
+{% block page_specified_style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/list_pemancingan/card.css') }}">
+{% endblock %}
+
+{% block content %} 
+
+<div class="mt-1 me-md-3 ms-md-3 mb-4 page-title"><b>Pemancingan</b></div>
+<div class="me-md-3 ms-md-3 mb-5">
+    <div class="d-flex ">
+        <input type="text" class="form-control me-3" id="cariPemancingan" placeholder="Cari Tempat Pemancingan">
+        <button type="button" class="btn theme-button-neutral-custom pe-4 ps-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFFFFF" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+        </button>
+    </div>
+</div>
+<div class="me-md-3 ms-md-3">
+    <div id="list-pemancingan" class="row row-cols-1 row-cols-md-12 row-cols-lg-3 g-4">
+        {% for pemancingan in informasi_pemancingan %}
+        <div class="col">
+            <div class="card h-100 shadow pemancingan-card">
+                <img src="{{ url_for('static', filename='images/' ~ pemancingan['image_url']) }}" class="card-img-top pemancingan-card-img" alt="...">
+                <div class="card-body">
+                    <div class="row w-100">
+                        <div class="text-white pemancingan-card-title"><b>{{pemancingan['nama']}}</b></div>
+                        <div class="text-white pemancingan-card-text mt-1 mb-2">{{pemancingan['alamat']}}</div>
+                        <div class="col-6 col-md-4 d-flex align-items-center">
+                            <svg class="me-2" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFFFFF" viewBox="0 0 256 256"><path d="M128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152ZM240,56H16a8,8,0,0,0-8,8V192a8,8,0,0,0,8,8H240a8,8,0,0,0,8-8V64A8,8,0,0,0,240,56ZM193.65,184H62.35A56.78,56.78,0,0,0,24,145.65v-35.3A56.78,56.78,0,0,0,62.35,72h131.3A56.78,56.78,0,0,0,232,110.35v35.3A56.78,56.78,0,0,0,193.65,184ZM232,93.37A40.81,40.81,0,0,1,210.63,72H232ZM45.37,72A40.81,40.81,0,0,1,24,93.37V72ZM24,162.63A40.81,40.81,0,0,1,45.37,184H24ZM210.63,184A40.81,40.81,0,0,1,232,162.63V184Z"></path></svg>
+                            <span class="text-white price-tag">{{pemancingan['harga']}}</span>
+                        </div>
+                        <div class="col-6 col-md-4 d-flex align-items-center">
+                            <svg class="me-2" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFFFFF" viewBox="0 0 256 256"><path d="M231.87,32.13a27.84,27.84,0,0,0-39.32,0L18.34,206.4a8,8,0,0,0,3.86,13.45A160.67,160.67,0,0,0,58.4,224c32.95,0,65.92-10.2,96.95-30.23,31.76-20.5,50.19-43.82,51-44.81a8,8,0,0,0-.64-10.59L185.32,118l46.55-46.56A27.85,27.85,0,0,0,231.87,32.13ZM189.1,144.44a220.41,220.41,0,0,1-42.86,36.16c-34.43,22.1-69.94,30.92-105.77,26.3L146,101.33Zm31.46-84.3L174,106.7,157.32,90l46.55-46.56a11.8,11.8,0,0,1,16.69,16.69Z"></path></svg>
+                            <span class="text-white price-tag">{{pemancingan['biaya_olah']}} / Kg</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{url_for('views.detail_pemancingan', id=pemancingan['id'])}}" class="btn me-3 ms-3 mb-3 theme-button-neutral-custom"><b>Detail</b></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

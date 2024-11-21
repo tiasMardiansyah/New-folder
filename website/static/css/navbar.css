@@ -1,0 +1,21 @@
+.navbar-custom {
+    background-color: #216988; /* Change this to your desired color */
+    height: 80px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.navbar-text-custom {
+    color: white;
+    font-size: 12px;
+}
+
+.icon-container {
+    background-color: #209AC7;
+    border-radius: 5px;
+    width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
