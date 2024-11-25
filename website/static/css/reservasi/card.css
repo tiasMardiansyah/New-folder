@@ -1,0 +1,25 @@
+.pemancingan-card-img {
+    border-radius: 15px 15px 0 0;
+    width: 100%; 
+    height: 175px;
+    object-fit: cover; /* Ensure the image covers the area */
+}
+
+.pemancingan-card {
+    background-color: #216988;
+    border-radius: 15px;
+}
+
+.pemancingan-card-title {
+    font-size: 14px;
+}
+
+.pemancingan-card-text {
+    font-size: 12px;
+}
+
+.price-tag {
+    font-size: 12px;
+    font-weight: 500;
+}
+

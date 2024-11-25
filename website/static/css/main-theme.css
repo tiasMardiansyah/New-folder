@@ -3,8 +3,7 @@
 body {
     font-family: 'Inter', sans-serif !important;
     display: flex;
-    flex-direction: column;
-    
+    flex-direction: column;    
 }
 
 .content-wrapper {
@@ -52,4 +51,25 @@ body {
     font-size: 24px;
 }
 
+.form-label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.form-checkbox-label {
+    font-size: 12px;
+}
+
+.scrollable-container {
+    max-height: 42vh; /* Adjust the height as needed */
+    overflow-y: auto;
+}
+
+hr {
+    opacity: 1;     /* Agar warna tidak termute*/
+    border: 0;    /* Hapus garis bawaan */
+    height: 3px;   /* Ketebalan garis */
+    color: white;  /* old IE */
+    background-color: white;  /* Modern Browsers */
+  }
 

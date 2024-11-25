@@ -21,7 +21,7 @@
             <!-- Should not flex -->
             <div class="d-flex justify-content-between g-1 mb-2">
                 <a href="{{informasi_pemancingan['link_map']}}" class="btn shadow theme-button-neutral-custom flex-grow-1 me-1"><b>Lihat Maps</b></a>
-                <a href="{{ url_for('views.list_pemancingan') }}" class="btn shadow theme-button-neutral-alt-custom flex-grow-1 ms-1"><b>Buat Reservasi</b></a>
+                <a href="{{ url_for('views.reservasi_pemancingan', id=informasi_pemancingan['id']) }}" class="btn shadow theme-button-neutral-alt-custom flex-grow-1 ms-1"><b>Buat Reservasi</b></a>
             </div> 
 
             <div class="row p-1">

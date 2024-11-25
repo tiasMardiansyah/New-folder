@@ -131,30 +131,23 @@ def detail_pemancingan(id):
 @views.route("/pemancingan/<int:id>/reservasi")
 def reservasi_pemancingan(id):
     return render_template( 
-        "detail_pemancingan.html",  
+        "reservasi.html",  
         active_page="pemancingan",
         informasi_pemancingan = {
             "id": 1,
-            "nama": "Pemancingan Ikan Mas",
-            "alamat": "Jl. Raya Bogor, No. 1, Bogor",
             "harga": "Rp. 30.000",
             "biaya_olah": "Rp. 5.000",
-            "deskripsi": "Pemancingan ikan mas yang terletak di Bogor, menyediakan fasilitas pancing dan makanan ikan mas.",
-            "kolam": [
-                "Kolam Kecil",
-                "Kolam Besar"
-            ],
-            "Jenis Ikan": [
-                "Ikan Mas",
-                "Ikan Nila"
-            ]
+            # "kolam": [
+            #     "Kolam Kecil",
+            #     "Kolam Besar"
+            # ],
         }
     )
 
-@views.route("/reservasi")
+@views.route("/histori_reservasi")
 def reservasi():
     return render_template( 
-        "reservasi.html",  
+        "histori_reservasi.html",  
         active_page="reservasi"
     )                                       
 
