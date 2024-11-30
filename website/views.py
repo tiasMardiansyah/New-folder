@@ -1,50 +1,20 @@
 from flask import Blueprint, render_template
+import api
 
 views = Blueprint("views", __name__)
 
+
 @views.route("/pemancingan")
 def list_pemancingan():
+
+    api.list_pemancingan()
+
+    
+    # Query ke pemancingan
     return render_template( 
         "list_pemancingan.html",  
         active_page="pemancingan",
-        informasi_pemancingan = [
-            {
-                "id": 1,
-                "nama": "Pemancingan Ikan Mas",
-                "description": "Pemancingan ikan mas yang terletak di Bogor, menyediakan fasilitas pancing.",
-                "alamat": "Jl. Raya Bogor, No. 1, Bogor",
-                "image_url": "pemancingan_1.jpg",
-                "harga": "Rp. 30.000",
-                "biaya_olah": "Rp. 5.000",
-            },
-            {
-                "id": 2,
-                "nama": "Pemancingan Ikan Mujaer",
-                "description": "Pemancingan ikan mujaer yang terletak di Sumedang, menyediakan fasilitas pancing dan makanan ikan mujaer.",
-                "alamat": "Jl. Raya Sumedang, No. 1, Sumedang",
-                "image_url": "pemancingan_2.jpg",
-                "harga": "Rp. 30.000",
-                "biaya_olah": "Rp. 5.000",
-            },
-            {
-                "id": 3,
-                "nama": "Pemancingan Ikan Tias",
-                "description": "Pemancingan ikan tias yang terletak di Sumedang, menyediakan fasilitas pancing dan makanan ikan.",
-                "alamat": "Jl. Raya Sumedang, No. 1, Sumedang",
-                "image_url": "pemancingan_3.jpg",
-                "harga": "Rp. 30.000",
-                "biaya_olah": "Rp. 5.000",
-            },
-            {
-                "id": 4,
-                "nama": "Pemancingan Ikan Tawes",
-                "description": "Pemancingan ikan tawes yang terletak di Situraja, menyediakan fasilitas pancing.",
-                "alamat": "Jl. Raya Situraja, No. 1, Situraja",
-                "image_url": "pemancingan_4.jpg",
-                "harga": "Rp. 30.000",
-                "biaya_olah": "Rp. 5.000",
-            }
-        ]
+        informasi_pemancingan = api.list_pemancingan()
     )
 
 @views.route("/pemancingan/<int:id>")
@@ -135,12 +105,13 @@ def reservasi_pemancingan(id):
         active_page="pemancingan",
         informasi_pemancingan = {
             "id": 1,
-            "harga": "Rp. 30.000",
-            "biaya_olah": "Rp. 5.000",
-            # "kolam": [
-            #     "Kolam Kecil",
-            #     "Kolam Besar"
-            # ],
+            "harga_masuk": 10000,
+            "ikan_perkilo": 10000,
+            "biaya_olah_perkilo": 3000,
+            # "kolam": {
+            #     1 : "Kolam Kecil",
+            #     2 : "Kolam Besar"
+            # }
         }
     )
 
