@@ -62,13 +62,13 @@
         </div>
     </div>  
 
-    {% if informasi_pemancingan['kolam'] != null %}
+    {% if informasi_pemancingan['kolam'] and informasi_pemancingan['kolam']|length > 0 %}
     <div class="mb-3 ">
         <label for="kolamDipilih" class="form-label custom-form-text">Kolam Dipilih</label>
         <select class="form-control" id="kolamDipilih" name="kolamDipilih">
             <option value="-" disabled selected>Pilih Kolam</option>
-            {% for key, value in informasi_pemancingan['kolam'].items() %}
-                <option value="{{ key }}">{{ value }}</option>
+            {% for informasi_kolam in informasi_pemancingan['kolam'] %}
+                <option value="{{ informasi_kolam.id }}">{{ informasi_kolam.nama }}</option>
             {% endfor %}
         </select>
     </div>
@@ -80,16 +80,15 @@
         <div class="row p-1">
             <div class="detail-pemancingan-card-title mb-1"><b>Total Pembayaran</b></div>
 
-            <div {% if informasi_pemancingan['harga_masuk'] == 0 %} hidden {% endif %}>
+            <div {% if informasi_pemancingan['biaya_tempat'] is none  %} hidden {% endif %}>
                 <div class="detail-pemancingan-card-text"><b>Biaya Tempat</b></div>
                 <div class="d-flex align-items-start">
                     <svg class="me-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFFFFF" viewBox="0 0 256 256">
                         <path d="M232,224H208V32h8a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16h8V224H24a8,8,0,0,0,0,16H232a8,8,0,0,0,0-16ZM64,32H192V224H160V184a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v40H64Zm80,192H112V192h32ZM88,64a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H96A8,8,0,0,1,88,64Zm48,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H144A8,8,0,0,1,136,64ZM88,104a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H96A8,8,0,0,1,88,104Zm48,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H144A8,8,0,0,1,136,104ZM88,144a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H96A8,8,0,0,1,88,144Zm48,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H144A8,8,0,0,1,136,144Z"></path>
                     </svg>
     
-                    <input type="hidden" id="biayaTempatForm" value="{{informasi_pemancingan['harga_masuk']}}">
-                    <span id="biayaTempat" class="detail-tag-text flex-grow-1 mt-1"></span>
-    
+                    <input type="hidden" id="biayaTempatForm" value="{{ informasi_pemancingan['biaya_tempat'] if informasi_pemancingan['biaya_tempat'] is not none else 0 }}">
+                    <span id="biayaTempat" class="detail-tag-text flex-grow-1 mt-1 price-formatted-kg" ></span>
                 </div>
             </div>
 
@@ -99,9 +98,9 @@
                     <path d="M168,76a12,12,0,1,1-12-12A12,12,0,0,1,168,76Zm48.72,67.64c-19.37,34.9-55.44,53.76-107.24,56.1l-22,51.41A8,8,0,0,1,80.1,256l-.51,0a8,8,0,0,1-7.19-5.78L57.6,198.39,5.8,183.56a8,8,0,0,1-1-15.05l51.41-22c2.35-51.78,21.21-87.84,56.09-107.22,24.75-13.74,52.74-15.84,71.88-15.18,18.64.64,36,4.27,38.86,6a8,8,0,0,1,2.83,2.83c1.69,2.85,5.33,20.21,6,38.85C232.55,90.89,230.46,118.89,216.72,143.64Zm-55.18,29a52.11,52.11,0,0,1-33.4-44.78A52.09,52.09,0,0,1,83.37,94.47q-10.45,23.79-11.3,57.59a8,8,0,0,1-4.85,7.17L31.83,174.37l34.45,9.86a8,8,0,0,1,5.49,5.5l9.84,34.44,15.16-35.4a8,8,0,0,1,7.17-4.84Q137.71,183.12,161.54,172.64ZM212.42,43.57c-14.15-3-64.1-11-100.3,14.75a81.21,81.21,0,0,0-16,15.07,36,36,0,0,0,39.35,38.44,8,8,0,0,1,8.73,8.73,36,36,0,0,0,38.47,39.34,80.81,80.81,0,0,0,15-16C223.42,107.73,215.42,57.74,212.42,43.57Z"></path>
                 </svg>
 
-                <input type="hidden" id="biayaIkanPerKilo" value="{{informasi_pemancingan['ikan_perkilo']}}">
+                <input type="hidden" id="biayaIkanPerKilo" value="{{informasi_pemancingan['biaya_ikan']}}">
                 <input type="hidden" id="biayaIkanForm" value="0">
-                <span id="biayaIkan" class="detail-tag-text flex-grow-1 mt-1">Rp. 0</span>
+                <span id="biayaIkan" class="detail-tag-text flex-grow-1 mt-1 price-formatted">Rp. 0</span>
 
             </div>
             
@@ -112,7 +111,7 @@
                         <path d="M231.87,32.13a27.84,27.84,0,0,0-39.32,0L18.34,206.4a8,8,0,0,0,3.86,13.45A160.67,160.67,0,0,0,58.4,224c32.95,0,65.92-10.2,96.95-30.23,31.76-20.5,50.19-43.82,51-44.81a8,8,0,0,0-.64-10.59L185.32,118l46.55-46.56A27.85,27.85,0,0,0,231.87,32.13ZM189.1,144.44a220.41,220.41,0,0,1-42.86,36.16c-34.43,22.1-69.94,30.92-105.77,26.3L146,101.33Zm31.46-84.3L174,106.7,157.32,90l46.55-46.56a11.8,11.8,0,0,1,16.69,16.69Z"></path>
                     </svg>
 
-                    <input type="hidden" id="biayaOlahPerKilo" value="{{informasi_pemancingan['biaya_olah_perkilo']}}">
+                    <input type="hidden" id="biayaOlahPerKilo" value="{{informasi_pemancingan['biaya_olah']}}">
                     <input type="hidden" id="biayaOlahForm" value="0">
                     <span id="biayaOlah" class="detail-tag-text flex-grow-1 mt-1">Rp. 0</span>
                 </div>
@@ -182,6 +181,66 @@
             }
 
             calculateTotalBayar();
+        });
+    
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: "Buat Reservasi?",
+                icon: "warning",
+                iconColor: "#000000",   
+                background: "#FFF4DC",
+                color : "#000000",
+                showCancelButton: true,
+                confirmButtonColor: "#209AC7",
+                confirmButtonText: "Buat",
+                cancelButtonText: "Kembali",
+                reverseButtons: true,
+                cancelButtonColor: "#C72020",
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    var idPemancingan = $('#idPemancingan').val();
+                    var tanggalMancing = $('#tangalMancing').val();
+                    var jamMancing = $('#jamMancing').val();
+                    var jumlahOrangMancing = $('#jumlahOrangMancing').val();
+                    var beratDipancing = $('#beratDipancing').val();
+                    var kolamDipilih = $('#kolamDipilih').val();
+                    var isDiolah = $('#isIkanDiProses').is(':checked');
+
+                    var biayaTempat = $('#biayaTempatForm').val();
+                    var biayaIkan = $('#biayaIkanForm').val();
+                    var biayaOlah = $('#biayaOlahForm').val();
+                    var biayaKeseluruhan = $('#biayaKeseluruhanForm').val();
+
+                    $.ajax({
+                        url: "{{ url_for('api.submit_reservasi') }}",
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            idPemancingan: idPemancingan,
+                            tanggalMancing: tanggalMancing,
+                            jamMancing: jamMancing,
+                            jumlahOrangMancing: jumlahOrangMancing,
+                            beratDipancing: beratDipancing,
+                            kolamDipilih: kolamDipilih,
+                            biayaTempat: biayaTempat,
+                            biayaIkan: biayaIkan,
+                            biayaOlah: biayaOlah,
+                            isDiolah: isDiolah,
+                            biayaKeseluruhan: biayaKeseluruhan
+                        }),
+                        success: function(response) {
+                            Swal.fire("Reservasi Berhasil!", "", "success").then((result) => {
+                            });
+                        },
+                        error: function(response) {
+                            Swal.fire("Reservasi Gagal!", "", "error");
+                        }
+                    });
+                }
+            });
         });
     });
 

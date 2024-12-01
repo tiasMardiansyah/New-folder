@@ -1,5 +1,27 @@
+$(document).ready(function () {
 
-formatRupiah = (angka, prefix) => {
+    // Format Rupiah
+    $('.price-formatted').each(function() {
+        var formattedPrice = formatRupiah($(this).text(), 'Rp. ');
+        $(this).text(formattedPrice);
+    });
+
+    $('.price-formatted-kg').each(function() {
+        var formattedPrice = formatRupiah($(this).text(), 'Rp. ');
+        $(this).text(formattedPrice + '/kg');
+    });
+})
+
+formatRupiah = (angka, prefix, suffix) => {
+
+    if (suffix == undefined) {
+        suffix = '';
+    }
+
+    if (typeof angka === 'number') {
+        angka = angka.toString();
+    }
+
     var number_string = angka.replace(/[^,\d]/g, '').toString(),
         split = number_string.split(','),
         sisa = split[0].length % 3,
@@ -12,5 +34,9 @@ formatRupiah = (angka, prefix) => {
     }
 
     rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-    return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    return prefix == undefined 
+        ? rupiah + suffix 
+        : (rupiah ? 'Rp. ' + rupiah + suffix : '');
 }
+
+
