@@ -1,25 +1,53 @@
-.pemancingan-card-img {
+.reservasi-card-img {
     border-radius: 15px 15px 0 0;
     width: 100%; 
     height: 175px;
     object-fit: cover; /* Ensure the image covers the area */
 }
 
-.pemancingan-card {
+.reservasi-card {
     background-color: #216988;
     border-radius: 15px;
 }
 
-.pemancingan-card-title {
+.reservasi-card-title {
     font-size: 14px;
+    color: white;
 }
 
-.pemancingan-card-text {
+.reservasi-card-text {
     font-size: 12px;
+    color: white;
 }
 
 .price-tag {
     font-size: 12px;
     font-weight: 500;
+    color: white;
+
 }
+
+.reservasi-dibuat-card {
+    background-color: #216988;
+    width: 275px;
+    border-radius: 15px;
+}
+
+.reservasi-dibuat-card-title {
+    font-size: 20px;
+    color: white;
+}
+
+.reservasi-dibuat-card-small-text {
+    font-size: 12px;
+    color: white;
+}
+
+.reservasi-dibuat-card-text {
+    font-size: 14px;
+    color: white;
+}
+
+
+
 

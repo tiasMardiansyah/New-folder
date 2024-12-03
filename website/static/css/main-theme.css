@@ -6,6 +6,10 @@ body {
     flex-direction: column;    
 }
 
+.centered-content-custom {
+    margin-top: 35vh;
+}
+
 .content-wrapper {
     flex: 1;
     margin: 12px 12px 12px 12px;

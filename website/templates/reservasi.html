@@ -3,145 +3,150 @@
 {% block title %}Beranda{% endblock %}
 
 {% block page_specified_style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/detail_pemancingan/card.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reservasi/card.css') }}">
 {% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mt-1 mb-3">
-    <div class="page-title mb-1"><b>Reservasi</b></div>
-    <a href="{{url_for('views.detail_pemancingan', id=informasi_pemancingan['id'])}}" class="btn theme-button-danger-custom ps-5 pe-5"><b>Kembali</b></a>
+<div id="global-content">
+    <div class="d-flex justify-content-between align-items-center mt-1 mb-3">
+        <div class="page-title mb-1"><b>Reservasi</b></div>
+        <a href="{{url_for('views.detail_pemancingan', id=informasi_pemancingan['id'])}}" class="btn theme-button-danger-custom ps-5 pe-5"><b>Kembali</b></a>
+    </div>
+    
+    <!-- Form Div -->
+    <form action="/submit_reservasi" method="POST">
+    
+        <input type="hidden" id="idPemancingan" value="{{informasi_pemancingan['id']}}">
+    
+        <div class="mb-3">
+            <label for="tangalMancing" class="form-label custom-form-text">Input Tanggal</label>
+            <div class="input-group has-validation">
+                <input type="date" class="form-control" id="tangalMancing" required>
+                <div class="invalid-feedback">
+                    Mohon Diisi Tanggal Memancing.
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="jamMancing" class="form-label custom-form-text">Input Jam</label>
+            <div class="input-group has-validation">
+                <input type="time" class="form-control" id="jamMancing" required>
+                <div class="invalid-feedback">
+                    Mohon Diisi Waktu Memancing.
+                </div>
+            </div>
+        </div>
+    
+        <div class="mb-3">
+            <label for="jumlahOrangMancing" class="form-label custom-form-text">Jumlah Orang</label>
+            <div class="input-group has-validation">
+                <input type="number" class="form-control" id="jumlahOrangMancing" required>
+                <div class="invalid-feedback">
+                    Mohon Diisi Waktu Memancing.
+                </div>
+            </div>
+        </div>
+    
+        <div class="mb-3">
+            <label for="beratDipancing" class="form-label">Berat Ikan Yang Dipancing (Kg)</label>
+            <div class="input-group has-validation">
+                <input type="number" class="form-control" id="beratDipancing" required>
+                <div class="invalid-feedback">
+                    Mohon Diisi Berat Ikan Yang Dipancing.
+                </div>
+            </div>
+    
+            <div class="ms-1 mt-2 form-check">
+                <input type="checkbox" class="form-check-input" id="isIkanDiProses">
+                <label class="form-check-label form-checkbox-label" for="isIkanDiProses">Olah Hasil Pancingan</label>
+            </div>
+        </div>  
+    
+        {% if informasi_pemancingan['kolam'] and informasi_pemancingan['kolam']|length > 0 %}
+        <div class="mb-3 ">
+            <label for="kolamDipilih" class="form-label custom-form-text">Kolam Dipilih</label>
+            <select class="form-control" id="kolamDipilih" name="kolamDipilih" required>
+                <option value="" selected>Pilih Kolam</option>
+                {% for informasi_kolam in informasi_pemancingan['kolam'] %}
+                    <option value="{{ informasi_kolam.id }}">{{ informasi_kolam.nama }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+    
+        <!-- Menu Total Pembayaran -->
+        <div class="card h-100 shadow reservasi-card mt-4">
+        <div class="card-body">
+            <div class="row p-1">
+                <div class="reservasi-card-title mb-1"><b>Total Pembayaran</b></div>
+    
+                <div {% if informasi_pemancingan['biaya_tempat'] is none  %} hidden {% endif %}>
+                    <div class="reservasi-card-text"><b>Biaya Tempat</b></div>
+                    <div class="d-flex align-items-start">
+                        <svg class="me-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFFFFF" viewBox="0 0 256 256">
+                            <path d="M232,224H208V32h8a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16h8V224H24a8,8,0,0,0,0,16H232a8,8,0,0,0,0-16ZM64,32H192V224H160V184a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v40H64Zm80,192H112V192h32ZM88,64a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H96A8,8,0,0,1,88,64Zm48,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H144A8,8,0,0,1,136,64ZM88,104a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H96A8,8,0,0,1,88,104Zm48,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H144A8,8,0,0,1,136,104ZM88,144a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H96A8,8,0,0,1,88,144Zm48,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H144A8,8,0,0,1,136,144Z"></path>
+                        </svg>
+        
+                        <input type="hidden" id="biayaTempatForm" value="{{ informasi_pemancingan['biaya_tempat'] if informasi_pemancingan['biaya_tempat'] is not none else 0 }}">
+                        <span id="biayaTempat" class="price-tag flex-grow-1 mt-1 price-formatted-kg" ></span>
+                    </div>
+                </div>
+    
+                <div class="reservasi-card-text mt-1"><b>Biaya Ikan</b></div>
+                <div class="d-flex align-items-start">
+                    <svg class="me-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFFFFF" viewBox="0 0 256 256">
+                        <path d="M168,76a12,12,0,1,1-12-12A12,12,0,0,1,168,76Zm48.72,67.64c-19.37,34.9-55.44,53.76-107.24,56.1l-22,51.41A8,8,0,0,1,80.1,256l-.51,0a8,8,0,0,1-7.19-5.78L57.6,198.39,5.8,183.56a8,8,0,0,1-1-15.05l51.41-22c2.35-51.78,21.21-87.84,56.09-107.22,24.75-13.74,52.74-15.84,71.88-15.18,18.64.64,36,4.27,38.86,6a8,8,0,0,1,2.83,2.83c1.69,2.85,5.33,20.21,6,38.85C232.55,90.89,230.46,118.89,216.72,143.64Zm-55.18,29a52.11,52.11,0,0,1-33.4-44.78A52.09,52.09,0,0,1,83.37,94.47q-10.45,23.79-11.3,57.59a8,8,0,0,1-4.85,7.17L31.83,174.37l34.45,9.86a8,8,0,0,1,5.49,5.5l9.84,34.44,15.16-35.4a8,8,0,0,1,7.17-4.84Q137.71,183.12,161.54,172.64ZM212.42,43.57c-14.15-3-64.1-11-100.3,14.75a81.21,81.21,0,0,0-16,15.07,36,36,0,0,0,39.35,38.44,8,8,0,0,1,8.73,8.73,36,36,0,0,0,38.47,39.34,80.81,80.81,0,0,0,15-16C223.42,107.73,215.42,57.74,212.42,43.57Z"></path>
+                    </svg>
+    
+                    <input type="hidden" id="biayaIkanPerKilo" value="{{informasi_pemancingan['biaya_ikan']}}">
+                    <input type="hidden" id="biayaIkanForm" value="0">
+                    <span id="biayaIkan" class="price-tag flex-grow-1 mt-1 price-formatted">Rp. 0</span>
+    
+                </div>
+                
+                <div id="biaya-pengolahan-wrapper" hidden>
+                    <div class="reservasi-card-text mt-1"><b>Biaya Pengolahan</b></div>
+                    <div class="d-flex align-items-start">
+                        <svg class="me-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFFFFF" viewBox="0 0 256 256">
+                            <path d="M231.87,32.13a27.84,27.84,0,0,0-39.32,0L18.34,206.4a8,8,0,0,0,3.86,13.45A160.67,160.67,0,0,0,58.4,224c32.95,0,65.92-10.2,96.95-30.23,31.76-20.5,50.19-43.82,51-44.81a8,8,0,0,0-.64-10.59L185.32,118l46.55-46.56A27.85,27.85,0,0,0,231.87,32.13ZM189.1,144.44a220.41,220.41,0,0,1-42.86,36.16c-34.43,22.1-69.94,30.92-105.77,26.3L146,101.33Zm31.46-84.3L174,106.7,157.32,90l46.55-46.56a11.8,11.8,0,0,1,16.69,16.69Z"></path>
+                        </svg>
+    
+                        <input type="hidden" id="biayaOlahPerKilo" value="{{informasi_pemancingan['biaya_olah']}}">
+                        <input type="hidden" id="biayaOlahForm" value="0">
+                        <span id="biayaOlah" class="price-tag flex-grow-1 mt-1">Rp. 0</span>
+                    </div>
+                </div>
+    
+                <hr class="mt-1 mb-1 separator">
+    
+                <div class="reservasi-card-text"><b>Biaya Keseluruhan</b></div>
+                <div class="d-flex align-items-start">
+                    <svg class="me-2 flex-shrink-0" style="width: 28px; height: 28px;" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" viewBox="0 0 256 256">
+                        <path d="M128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152ZM240,56H16a8,8,0,0,0-8,8V192a8,8,0,0,0,8,8H240a8,8,0,0,0,8-8V64A8,8,0,0,0,240,56ZM193.65,184H62.35A56.78,56.78,0,0,0,24,145.65v-35.3A56.78,56.78,0,0,0,62.35,72h131.3A56.78,56.78,0,0,0,232,110.35v35.3A56.78,56.78,0,0,0,193.65,184ZM232,93.37A40.81,40.81,0,0,1,210.63,72H232ZM45.37,72A40.81,40.81,0,0,1,24,93.37V72ZM24,162.63A40.81,40.81,0,0,1,45.37,184H24ZM210.63,184A40.81,40.81,0,0,1,232,162.63V184Z"></path>
+                    </svg>
+    
+                    <input type="hidden" id="biayaKeseluruhanForm" value="0">
+                    <span id="biayaKeseluruhan" class="price-tag flex-grow-1 mt-1"></span>
+                </div>
+            </div>
+    
+        </div>
+    
+        </div>
+        <div class="mt-2">
+            <button type="submit" class="btn shadow theme-button-neutral-alt-custom w-100"><b>Buat Reservasi</b></button>
+        </div>
+    </form>
 </div>
 
-<!-- Form Div -->
-<form action="/submit_reservasi" method="POST">
-
-    <input type="hidden" id="idPemancingan" value="{{informasi_pemancingan['id']}}">
-
-    <div class="mb-3">
-        <label for="tangalMancing" class="form-label custom-form-text">Input Tanggal</label>
-        <div class="input-group has-validation">
-            <input type="date" class="form-control" id="tangalMancing" required>
-            <div class="invalid-feedback">
-                Mohon Diisi Tanggal Memancing.
-            </div>
-        </div>
-    </div>
-    
-    <div class="mb-3">
-        <label for="jamMancing" class="form-label custom-form-text">Input Jam</label>
-        <div class="input-group has-validation">
-            <input type="time" class="form-control" id="jamMancing" required>
-            <div class="invalid-feedback">
-                Mohon Diisi Waktu Memancing.
-            </div>
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <label for="jumlahOrangMancing" class="form-label custom-form-text">Jumlah Orang</label>
-        <div class="input-group has-validation">
-            <input type="number" class="form-control" id="jumlahOrangMancing" required>
-            <div class="invalid-feedback">
-                Mohon Diisi Waktu Memancing.
-            </div>
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <label for="beratDipancing" class="form-label">Berat Ikan Yang Dipancing (Kg)</label>
-        <div class="input-group has-validation">
-            <input type="number" class="form-control" id="beratDipancing" required>
-            <div class="invalid-feedback">
-                Mohon Diisi Berat Ikan Yang Dipancing.
-            </div>
-        </div>
-
-        <div class="ms-1 mt-2 form-check">
-            <input type="checkbox" class="form-check-input" id="isIkanDiProses">
-            <label class="form-check-label form-checkbox-label" for="isIkanDiProses">Olah Hasil Pancingan</label>
-        </div>
-    </div>  
-
-    {% if informasi_pemancingan['kolam'] and informasi_pemancingan['kolam']|length > 0 %}
-    <div class="mb-3 ">
-        <label for="kolamDipilih" class="form-label custom-form-text">Kolam Dipilih</label>
-        <select class="form-control" id="kolamDipilih" name="kolamDipilih">
-            <option value="-" disabled selected>Pilih Kolam</option>
-            {% for informasi_kolam in informasi_pemancingan['kolam'] %}
-                <option value="{{ informasi_kolam.id }}">{{ informasi_kolam.nama }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    {% endif %}
-
-    <!-- Menu Total Pembayaran -->
-    <div class="card h-100 shadow detail-pemancingan-card mt-4">
-    <div class="card-body">
-        <div class="row p-1">
-            <div class="detail-pemancingan-card-title mb-1"><b>Total Pembayaran</b></div>
-
-            <div {% if informasi_pemancingan['biaya_tempat'] is none  %} hidden {% endif %}>
-                <div class="detail-pemancingan-card-text"><b>Biaya Tempat</b></div>
-                <div class="d-flex align-items-start">
-                    <svg class="me-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFFFFF" viewBox="0 0 256 256">
-                        <path d="M232,224H208V32h8a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16h8V224H24a8,8,0,0,0,0,16H232a8,8,0,0,0,0-16ZM64,32H192V224H160V184a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v40H64Zm80,192H112V192h32ZM88,64a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H96A8,8,0,0,1,88,64Zm48,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H144A8,8,0,0,1,136,64ZM88,104a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H96A8,8,0,0,1,88,104Zm48,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H144A8,8,0,0,1,136,104ZM88,144a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H96A8,8,0,0,1,88,144Zm48,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H144A8,8,0,0,1,136,144Z"></path>
-                    </svg>
-    
-                    <input type="hidden" id="biayaTempatForm" value="{{ informasi_pemancingan['biaya_tempat'] if informasi_pemancingan['biaya_tempat'] is not none else 0 }}">
-                    <span id="biayaTempat" class="detail-tag-text flex-grow-1 mt-1 price-formatted-kg" ></span>
-                </div>
-            </div>
-
-            <div class="detail-pemancingan-card-text mt-1"><b>Biaya Ikan</b></div>
-            <div class="d-flex align-items-start">
-                <svg class="me-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFFFFF" viewBox="0 0 256 256">
-                    <path d="M168,76a12,12,0,1,1-12-12A12,12,0,0,1,168,76Zm48.72,67.64c-19.37,34.9-55.44,53.76-107.24,56.1l-22,51.41A8,8,0,0,1,80.1,256l-.51,0a8,8,0,0,1-7.19-5.78L57.6,198.39,5.8,183.56a8,8,0,0,1-1-15.05l51.41-22c2.35-51.78,21.21-87.84,56.09-107.22,24.75-13.74,52.74-15.84,71.88-15.18,18.64.64,36,4.27,38.86,6a8,8,0,0,1,2.83,2.83c1.69,2.85,5.33,20.21,6,38.85C232.55,90.89,230.46,118.89,216.72,143.64Zm-55.18,29a52.11,52.11,0,0,1-33.4-44.78A52.09,52.09,0,0,1,83.37,94.47q-10.45,23.79-11.3,57.59a8,8,0,0,1-4.85,7.17L31.83,174.37l34.45,9.86a8,8,0,0,1,5.49,5.5l9.84,34.44,15.16-35.4a8,8,0,0,1,7.17-4.84Q137.71,183.12,161.54,172.64ZM212.42,43.57c-14.15-3-64.1-11-100.3,14.75a81.21,81.21,0,0,0-16,15.07,36,36,0,0,0,39.35,38.44,8,8,0,0,1,8.73,8.73,36,36,0,0,0,38.47,39.34,80.81,80.81,0,0,0,15-16C223.42,107.73,215.42,57.74,212.42,43.57Z"></path>
-                </svg>
-
-                <input type="hidden" id="biayaIkanPerKilo" value="{{informasi_pemancingan['biaya_ikan']}}">
-                <input type="hidden" id="biayaIkanForm" value="0">
-                <span id="biayaIkan" class="detail-tag-text flex-grow-1 mt-1 price-formatted">Rp. 0</span>
-
-            </div>
-            
-            <div id="biaya-pengolahan-wrapper" hidden>
-                <div class="detail-pemancingan-card-text mt-1"><b>Biaya Pengolahan</b></div>
-                <div class="d-flex align-items-start">
-                    <svg class="me-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#FFFFFF" viewBox="0 0 256 256">
-                        <path d="M231.87,32.13a27.84,27.84,0,0,0-39.32,0L18.34,206.4a8,8,0,0,0,3.86,13.45A160.67,160.67,0,0,0,58.4,224c32.95,0,65.92-10.2,96.95-30.23,31.76-20.5,50.19-43.82,51-44.81a8,8,0,0,0-.64-10.59L185.32,118l46.55-46.56A27.85,27.85,0,0,0,231.87,32.13ZM189.1,144.44a220.41,220.41,0,0,1-42.86,36.16c-34.43,22.1-69.94,30.92-105.77,26.3L146,101.33Zm31.46-84.3L174,106.7,157.32,90l46.55-46.56a11.8,11.8,0,0,1,16.69,16.69Z"></path>
-                    </svg>
-
-                    <input type="hidden" id="biayaOlahPerKilo" value="{{informasi_pemancingan['biaya_olah']}}">
-                    <input type="hidden" id="biayaOlahForm" value="0">
-                    <span id="biayaOlah" class="detail-tag-text flex-grow-1 mt-1">Rp. 0</span>
-                </div>
-            </div>
-
-            <hr class="mt-1 mb-1 separator">
-
-            <div class="detail-pemancingan-card-text"><b>Biaya Keseluruhan</b></div>
-            <div class="d-flex align-items-start">
-                <svg class="me-2 flex-shrink-0" style="width: 28px; height: 28px;" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" viewBox="0 0 256 256">
-                    <path d="M128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152ZM240,56H16a8,8,0,0,0-8,8V192a8,8,0,0,0,8,8H240a8,8,0,0,0,8-8V64A8,8,0,0,0,240,56ZM193.65,184H62.35A56.78,56.78,0,0,0,24,145.65v-35.3A56.78,56.78,0,0,0,62.35,72h131.3A56.78,56.78,0,0,0,232,110.35v35.3A56.78,56.78,0,0,0,193.65,184ZM232,93.37A40.81,40.81,0,0,1,210.63,72H232ZM45.37,72A40.81,40.81,0,0,1,24,93.37V72ZM24,162.63A40.81,40.81,0,0,1,45.37,184H24ZM210.63,184A40.81,40.81,0,0,1,232,162.63V184Z"></path>
-                </svg>
-
-                <input type="hidden" id="biayaKeseluruhanForm" value="0">
-                <span id="biayaKeseluruhan" class="detail-tag-text flex-grow-1 mt-1"></span>
-            </div>
-        </div>
-
-    </div>
-
-    </div>
-    <div class="mt-2">
-        <button type="submit" class="btn shadow theme-button-neutral-alt-custom w-100"><b>Buat Reservasi</b></button>
-    </div>
-</form>
 {% endblock %}
 
 {% block page_specified_script %}
 <script>
     $(document).ready(function() {
+
+
         $('#biayaTempat').html(function() {
             var biayaTempat = $('#biayaTempatForm').val();
 
@@ -185,6 +190,13 @@
     
         $('form').on('submit', function(e) {
             e.preventDefault();
+
+            // Check if the form is valid
+            if (this.checkValidity() === false) {
+                e.stopPropagation();
+                this.classList.add('was-validated');
+                return;
+            }
 
             Swal.fire({
                 title: "Buat Reservasi?",
@@ -232,8 +244,30 @@
                             biayaKeseluruhan: biayaKeseluruhan
                         }),
                         success: function(response) {
-                            Swal.fire("Reservasi Berhasil!", "", "success").then((result) => {
-                            });
+                            htmlResponse = `
+                                <div class="d-flex justify-content-center align-items-center centered-content-custom">
+                                    <div class="card shadow reservasi-dibuat-card">
+                                        <div class="card-body me-1 ms-1">
+                                            <div class="row">
+                                                <div class="reservasi-dibuat-card-title"><b>Reservasi Berhasil Dibuat</b></div>
+                                                <div class="reservasi-dibuat-card-small-text mb-3 mt-2 fw-lighter">Reservasi kamu akan di cek oleh pemilik pemancingan. </div>
+
+                                                <div class="reservasi-dibuat-card-text mb-1"><b>Kode Reservasi</b></div>
+                                                <div class="d-flex align-items-start">
+                                                    <svg class="me-2 flex-shrink-0" width="28" height="28" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" viewBox="0 0 256 256"><path d="M72,104a8,8,0,0,1,8-8h96a8,8,0,0,1,0,16H80A8,8,0,0,1,72,104Zm8,40h96a8,8,0,0,0,0-16H80a8,8,0,0,0,0,16ZM232,56V208a8,8,0,0,1-11.58,7.15L192,200.94l-28.42,14.21a8,8,0,0,1-7.16,0L128,200.94,99.58,215.15a8,8,0,0,1-7.16,0L64,200.94,35.58,215.15A8,8,0,0,1,24,208V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56Zm-16,0H40V195.06l20.42-10.22a8,8,0,0,1,7.16,0L96,199.06l28.42-14.22a8,8,0,0,1,7.16,0L160,199.06l28.42-14.22a8,8,0,0,1,7.16,0L216,195.06Z"></path></svg>
+                                                    <span class="reservasi-dibuat-card-text flex-grow-1 mt-1">
+                                                        ${response.data.id_reservasi}
+                                                    </span>
+                                                </div>
+
+                                                <a href="{{url_for('views.list_pemancingan')}}" class="btn mt-3 theme-button-neutral-custom"><b>Kembali Ke Menu</b></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                            $('#global-content').html(htmlResponse);
                         },
                         error: function(response) {
                             Swal.fire("Reservasi Gagal!", "", "error");

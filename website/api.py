@@ -185,10 +185,10 @@ def submit_reservasi ():
     try:
         with session.begin():
             result = execute_query(latest_id_query)
-            new_reservasi_id = result[0]["id"]
 
-            if (new_reservasi_id == None):
-                new_reservasi_id = 'R0000000000000'
+            new_reservasi_id = 'R0000000000000'
+            if (result != []):
+                new_reservasi_id = result[0]['id']
 
             new_reservasi_id = int(new_reservasi_id[9:]) +  1
 
@@ -218,10 +218,39 @@ def submit_reservasi ():
 
         return {
             "success": True,
+            "data" : {
+                "id_reservasi": formatted_id
+            },
             "message": "Reservasi berhasil"
         }
     except Exception as e:
+        print(str(e))
         return {
             "success": False,
             "message": str(e)
         }
+    finally:
+        session.close()
+
+    
+def get_histori_reservasi():
+
+    
+    query = text("SELECT * FROM histori_reservasi where id_user = :id_user")
+
+    result = execute_query(query, {'id_user': 1})
+    histori_reservasi = []
+
+    for row in result:
+
+        tanggal = row["tanggal_reserv"]
+        tanggal_reserv = tanggal.strftime("%Y-%m-%d")
+        jam_reserv = tanggal.strftime("%H:%M")
+
+        
+        histori_reservasi.append({
+            "id_reservasi": row["id_reservasi"],
+
+            "status": row["status"]
+        })
+    return result

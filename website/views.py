@@ -1,8 +1,7 @@
-from flask import Blueprint, render_template, jsonify
+from flask import Blueprint, render_template, redirect, url_for
 from website import api
 
 views = Blueprint("views", __name__)
-
 
 @views.route("/pemancingan")
 def list_pemancingan():
@@ -13,6 +12,12 @@ def list_pemancingan():
         active_page="pemancingan",
         informasi_pemancingan = api.list_pemancingan()
     )
+
+@views.route("/")
+def redirect_to_pemancingan():
+    # Redirect to /pemancingan
+    return redirect(url_for('views.list_pemancingan'))
+
 
 @views.route("/pemancingan/<int:id>")
 def detail_pemancingan(id):
